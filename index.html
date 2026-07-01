@@ -1,576 +1,1144 @@
-<!DOCTYPE html>
-<html lang="es">
-<head><meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mecanica de Suelos en Santiago. Estudios, consultoria especializada, calicatas, sondajes SPT, estudios geofisicos y asesorias personalizadas.">
-  <title>Mecanica de Suelos en Santiago</title>
-  <style>
-    /* ── RESET & BASE ──────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --c0: #0c1016;
-      --c1: #161d28;
-      --c2: #1e2636;
-      --accent:  #d4a040;
-      --accent2: #f2c96e;
-      --light:   #f5f6f7;
-      --muted:   #9faab5;
-      --white:   #ffffff;
-      --green:   #2ea043;
-      --green-h: #3fb950;
-      --radius-sm: 6px;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,.4);
-      --shadow-md: 0 4px 20px rgba(0,0,0,.45);
-      --max-w: 960px;
-      --transition: .22s ease;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--light);
-      background: var(--c0);
-    }
-
-    /* ── TOP BAR ───────────────────────────────────────── */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(12,16,22,.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(212,160,64,.32);
-      padding: 13px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .topbar-brand {
-      font-size: .82rem;
-      font-weight: 700;
-      color: var(--accent2);
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-    }
-
-    .topbar-cta {
-      display: inline-block;
-      background: var(--green);
-      color: var(--white);
-      text-decoration: none;
-      padding: 8px 22px;
-      border-radius: 30px;
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: .3px;
-      transition: background var(--transition), transform var(--transition);
-      white-space: nowrap;
-    }
-
-    .topbar-cta:hover { background: var(--green-h); transform: translateY(-1px); }
-
-    /* ── HERO ──────────────────────────────────────────── */
-    .hero {
-      position: relative;
-      background: linear-gradient(135deg, #0c1016 0%, #1e1509 55%, #0d1b0b 100%);
-      overflow: hidden;
-      padding: 68px 24px 72px;
-      text-align: center;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -140px; right: -140px;
-      width: 520px; height: 520px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,160,64,.28) 0%, transparent 68%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      bottom: -100px; left: -100px;
-      width: 360px; height: 360px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(46,160,67,.18) 0%, transparent 68%);
-      pointer-events: none;
-    }
-
-    .hero-label {
-      display: inline-block;
-      border: 1px solid rgba(212,160,64,.7);
-      background: rgba(212,160,64,.1);
-      color: var(--accent2);
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: 2.8px;
-      text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 30px;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5.5vw, 3.4rem);
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -.6px;
-      line-height: 1.12;
-      max-width: 760px;
-      margin: 0 auto 26px;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-desc {
-      max-width: 680px;
-      margin: 0 auto 40px;
-      color: #b4bec8;
-      font-size: clamp(.9rem, 2vw, 1.05rem);
-      line-height: 1.85;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      color: #0d1005;
-      text-decoration: none;
-      padding: 15px 42px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-size: .97rem;
-      letter-spacing: .2px;
-      box-shadow: 0 4px 22px rgba(212,160,64,.48);
-      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
-    }
-
-    .btn-primary:hover {
-      opacity: .88;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(212,160,64,.6);
-    }
-
-    .btn-primary:active { transform: translateY(0); }
-
-    .btn-ghost {
-      display: inline-block;
-      background: transparent;
-      color: var(--light);
-      text-decoration: none;
-      padding: 14px 38px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: .97rem;
-      border: 1.5px solid rgba(240,240,240,.2);
-      transition: border-color var(--transition), color var(--transition), transform var(--transition);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent2);
-      transform: translateY(-2px);
-    }
-
-    /* ── STATS STRIP ───────────────────────────────────── */
-    .stats {
-      background: var(--c1);
-      border-top: 1px solid rgba(212,160,64,.35);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      padding: 30px 24px;
-    }
-
-    .stats-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 16px;
-      text-align: center;
-    }
-
-    .stat-item strong {
-      display: block;
-      font-size: 1.65rem;
-      font-weight: 800;
-      color: var(--accent2);
-      line-height: 1.1;
-      letter-spacing: -.5px;
-    }
-
-    .stat-item span {
-      font-size: .73rem;
-      color: #8fa0b0;
-      text-transform: uppercase;
-      letter-spacing: 1.1px;
-    }
-
-    /* ── WRAPPER ───────────────────────────────────────── */
-    .wrapper {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 20px 88px;
-    }
-
-    /* ── SECTION HEADER ────────────────────────────────── */
-    .sec-head {
-      margin-top: 72px;
-      margin-bottom: 28px;
-    }
-
-    .sec-tag {
-      display: inline-block;
-      font-size: .67rem;
-      font-weight: 700;
-      letter-spacing: 2.2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .sec-head h2 {
-      font-size: clamp(1.25rem, 3vw, 1.7rem);
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -.3px;
-      line-height: 1.25;
-    }
-
-    .sec-head p {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    /* ── HIGHLIGHT BOX ─────────────────────────────────── */
-    .highlight-box {
-      background: var(--c1);
-      border: 1px solid rgba(212,160,64,.38);
-      border-left: 4px solid var(--accent);
-      border-radius: var(--radius-md);
-      padding: 32px 36px;
-      margin-top: 72px;
-    }
-
-    .highlight-box h2 {
-      font-size: clamp(1.15rem, 2.8vw, 1.45rem);
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-
-    .highlight-box p {
-      color: #b4bec8;
-      font-size: .97rem;
-      line-height: 1.82;
-    }
-
-    /* ── SERVICE GRID ──────────────────────────────────── */
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-      gap: 12px;
-    }
-
-    .service-item {
-      background: var(--c1);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius-md);
-      padding: 16px 18px 16px 50px;
-      position: relative;
-      font-size: .92rem;
-      color: var(--light);
-      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
-    }
-
-    .service-item::before {
-      content: "✓";
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 22px;
-      height: 22px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 50%;
-      color: #0d1005;
-      font-size: .65rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 22px;
-      text-align: center;
-    }
-
-    .service-item:hover {
-      border-color: rgba(212,160,64,.55);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    /* ── WHY GRID ──────────────────────────────────────── */
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-      gap: 16px;
-    }
-
-    .why-card {
-      background: var(--c1);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius-md);
-      padding: 30px 22px;
-      text-align: center;
-      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
-    }
-
-    .why-card:hover {
-      border-color: rgba(212,160,64,.55);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .why-icon {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 18px;
-      background: linear-gradient(135deg, rgba(212,160,64,.26), rgba(242,201,110,.14));
-      border: 1px solid rgba(212,160,64,.42);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.55rem;
-    }
-
-    .why-card h3 {
-      font-size: .87rem;
-      font-weight: 600;
-      color: var(--light);
-      line-height: 1.5;
-    }
-
-    /* ── TEXT CARD ─────────────────────────────────────── */
-    .text-card {
-      background: var(--c1);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius-md);
-      padding: 34px 36px;
-    }
-
-    .text-card h2 {
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-
-    .text-card p {
-      color: #b4bec8;
-      font-size: .95rem;
-      line-height: 1.85;
-    }
-
-    /* ── CARD ROW ──────────────────────────────────────── */
-    .card-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 72px;
-    }
-
-    @media (max-width: 640px) {
-      .card-row { grid-template-columns: 1fr; }
-      .text-card { padding: 24px 22px; }
-    }
-
-    /* ── CTA SECTION ───────────────────────────────────── */
-    .cta-section {
-      margin-top: 72px;
-      background: linear-gradient(135deg, #111c10 0%, #201809 100%);
-      border: 1px solid rgba(212,160,64,.42);
-      border-radius: var(--radius-lg);
-      padding: 64px 40px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: "";
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,160,64,.2) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .cta-section h2 {
-      font-size: clamp(1.3rem, 3vw, 1.85rem);
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 14px;
-      letter-spacing: -.4px;
-      position: relative;
-    }
-
-    .cta-section p {
-      color: #b4bec8;
-      font-size: .97rem;
-      margin-bottom: 34px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.75;
-      position: relative;
-    }
-
-    /* ── CONTACT CTA ────────────────────────────────────── */
-    .contact-block {
-      margin-top: 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .contact-block .contact-intro {
-      font-size: .95rem;
-      color: #9ca3af;
-      margin: 0;
-    }
-
-    .wa-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #25d366;
-      color: #0d1005;
-      text-decoration: none;
-      padding: 14px 34px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-size: .97rem;
-      letter-spacing: .2px;
-      box-shadow: 0 4px 22px rgba(37,211,102,.32);
-      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-    }
-
-    .wa-btn:hover {
-      background: #20c55b;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(37,211,102,.42);
-    }
-
-    .wa-btn:active { transform: translateY(0); }
-
-    .wa-badge {
-      font-size: .73rem;
-      color: rgba(37,211,102,.7);
-      letter-spacing: .5px;
-    }
-
-    .contact-details {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px 28px;
-      margin-top: 6px;
-    }
-
-    .contact-details a {
-      color: #9ca3af;
-      text-decoration: none;
-      font-size: .88rem;
-      transition: color var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .contact-details a:hover { color: var(--accent2); }
-
-    /* ── FOOTER ────────────────────────────────────────── */
-    footer {
-      background: var(--c1);
-      border-top: 1px solid rgba(255,255,255,.06);
-      padding: 52px 24px 38px;
-      text-align: center;
-    }
-
-    .footer-logo {
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 16px;
-    }
-
-    .footer-tagline {
-      color: var(--muted);
-      font-size: .87rem;
-      margin-bottom: 22px;
-    }
-
-    .footer-email a {
-      color: var(--accent2);
-      text-decoration: none;
-      font-size: .97rem;
-      font-weight: 600;
-      border-bottom: 1px solid rgba(201,147,58,.3);
-      padding-bottom: 2px;
-      transition: color var(--transition), border-color var(--transition);
-    }
-
-    .footer-email a:hover { color: var(--white); border-color: var(--white); }
-
-    .footer-copy {
-      margin-top: 28px;
-      font-size: .72rem;
-      color: #4d5a68;
-      letter-spacing: .3px;
-    }
-
-    /* ── RESPONSIVE ────────────────────────────────────── */
-    @media (max-width: 620px) {
-      .hero { padding: 76px 20px 68px; }
-      .cta-section { padding: 44px 22px; }
-      .stats-inner { grid-template-columns: 1fr 1fr; }
-      .highlight-box { padding: 24px 22px; }
-    }
-  </style>
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head><meta charset="utf-8">
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Mecanica de Suelos en Santiago. Estudios, consultoria especializada, calicatas, sondajes SPT, estudios geofisicos y asesorias personalizadas.">
+
+  <title>Mecanica de Suelos en Santiago</title>
+
+  <style>
+
+    /* ── RESET & BASE ──────────────────────────────────── */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+
+    :root {
+
+      --c0: #0c1016;
+
+      --c1: #161d28;
+
+      --c2: #1e2636;
+
+      --accent:  #d4a040;
+
+      --accent2: #f2c96e;
+
+      --light:   #f5f6f7;
+
+      --muted:   #9faab5;
+
+      --white:   #ffffff;
+
+      --green:   #2ea043;
+
+      --green-h: #3fb950;
+
+      --radius-sm: 6px;
+
+      --radius-md: 12px;
+
+      --radius-lg: 20px;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.4);
+
+      --shadow-md: 0 4px 20px rgba(0,0,0,.45);
+
+      --max-w: 960px;
+
+      --transition: .22s ease;
+
+    }
+
+
+
+    html { scroll-behavior: smooth; }
+
+
+
+    body {
+
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+      font-size: 16px;
+
+      line-height: 1.7;
+
+      color: var(--light);
+
+      background: var(--c0);
+
+    }
+
+
+
+    /* ── TOP BAR ───────────────────────────────────────── */
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      background: rgba(12,16,22,.92);
+
+      backdrop-filter: blur(14px);
+
+      -webkit-backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid rgba(212,160,64,.32);
+
+      padding: 13px 28px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 16px;
+
+    }
+
+
+
+    .topbar-brand {
+
+      font-size: .82rem;
+
+      font-weight: 700;
+
+      color: var(--accent2);
+
+      letter-spacing: 1.2px;
+
+      text-transform: uppercase;
+
+    }
+
+
+
+    .topbar-cta {
+
+      display: inline-block;
+
+      background: var(--green);
+
+      color: var(--white);
+
+      text-decoration: none;
+
+      padding: 8px 22px;
+
+      border-radius: 30px;
+
+      font-size: .8rem;
+
+      font-weight: 700;
+
+      letter-spacing: .3px;
+
+      transition: background var(--transition), transform var(--transition);
+
+      white-space: nowrap;
+
+    }
+
+
+
+    .topbar-cta:hover { background: var(--green-h); transform: translateY(-1px); }
+
+
+
+    /* ── HERO ──────────────────────────────────────────── */
+
+    .hero {
+
+      position: relative;
+
+      background: linear-gradient(135deg, #0c1016 0%, #1e1509 55%, #0d1b0b 100%);
+
+      overflow: hidden;
+
+      padding: 68px 24px 72px;
+
+      text-align: center;
+
+    }
+
+
+
+    .hero::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: -140px; right: -140px;
+
+      width: 520px; height: 520px;
+
+      border-radius: 50%;
+
+      background: radial-gradient(circle, rgba(212,160,64,.28) 0%, transparent 68%);
+
+      pointer-events: none;
+
+    }
+
+
+
+    .hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      bottom: -100px; left: -100px;
+
+      width: 360px; height: 360px;
+
+      border-radius: 50%;
+
+      background: radial-gradient(circle, rgba(46,160,67,.18) 0%, transparent 68%);
+
+      pointer-events: none;
+
+    }
+
+
+
+    .hero-label {
+
+      display: inline-block;
+
+      border: 1px solid rgba(212,160,64,.7);
+
+      background: rgba(212,160,64,.1);
+
+      color: var(--accent2);
+
+      font-size: .68rem;
+
+      font-weight: 700;
+
+      letter-spacing: 2.8px;
+
+      text-transform: uppercase;
+
+      padding: 6px 18px;
+
+      border-radius: 30px;
+
+      margin-bottom: 24px;
+
+    }
+
+
+
+    .hero h1 {
+
+      font-size: clamp(2rem, 5.5vw, 3.4rem);
+
+      font-weight: 800;
+
+      color: var(--white);
+
+      letter-spacing: -.6px;
+
+      line-height: 1.12;
+
+      max-width: 760px;
+
+      margin: 0 auto 26px;
+
+    }
+
+
+
+    .hero h1 span {
+
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+
+      -webkit-background-clip: text;
+
+      -webkit-text-fill-color: transparent;
+
+      background-clip: text;
+
+    }
+
+
+
+    .hero-desc {
+
+      max-width: 680px;
+
+      margin: 0 auto 40px;
+
+      color: #b4bec8;
+
+      font-size: clamp(.9rem, 2vw, 1.05rem);
+
+      line-height: 1.85;
+
+    }
+
+
+
+    .hero-actions {
+
+      display: flex;
+
+      gap: 14px;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+    }
+
+
+
+    .btn-primary {
+
+      display: inline-block;
+
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+
+      color: #0d1005;
+
+      text-decoration: none;
+
+      padding: 15px 42px;
+
+      border-radius: 30px;
+
+      font-weight: 800;
+
+      font-size: .97rem;
+
+      letter-spacing: .2px;
+
+      box-shadow: 0 4px 22px rgba(212,160,64,.48);
+
+      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+
+    }
+
+
+
+    .btn-primary:hover {
+
+      opacity: .88;
+
+      transform: translateY(-2px);
+
+      box-shadow: 0 8px 30px rgba(212,160,64,.6);
+
+    }
+
+
+
+    .btn-primary:active { transform: translateY(0); }
+
+
+
+    .btn-ghost {
+
+      display: inline-block;
+
+      background: transparent;
+
+      color: var(--light);
+
+      text-decoration: none;
+
+      padding: 14px 38px;
+
+      border-radius: 30px;
+
+      font-weight: 600;
+
+      font-size: .97rem;
+
+      border: 1.5px solid rgba(240,240,240,.2);
+
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+
+    }
+
+
+
+    .btn-ghost:hover {
+
+      border-color: var(--accent);
+
+      color: var(--accent2);
+
+      transform: translateY(-2px);
+
+    }
+
+
+
+    /* ── STATS STRIP ───────────────────────────────────── */
+
+    .stats {
+
+      background: var(--c1);
+
+      border-top: 1px solid rgba(212,160,64,.35);
+
+      border-bottom: 1px solid rgba(255,255,255,.08);
+
+      padding: 30px 24px;
+
+    }
+
+
+
+    .stats-inner {
+
+      max-width: var(--max-w);
+
+      margin: 0 auto;
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+      gap: 16px;
+
+      text-align: center;
+
+    }
+
+
+
+    .stat-item strong {
+
+      display: block;
+
+      font-size: 1.65rem;
+
+      font-weight: 800;
+
+      color: var(--accent2);
+
+      line-height: 1.1;
+
+      letter-spacing: -.5px;
+
+    }
+
+
+
+    .stat-item span {
+
+      font-size: .73rem;
+
+      color: #8fa0b0;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.1px;
+
+    }
+
+
+
+    /* ── WRAPPER ───────────────────────────────────────── */
+
+    .wrapper {
+
+      max-width: var(--max-w);
+
+      margin: 0 auto;
+
+      padding: 0 20px 88px;
+
+    }
+
+
+
+    /* ── SECTION HEADER ────────────────────────────────── */
+
+    .sec-head {
+
+      margin-top: 72px;
+
+      margin-bottom: 28px;
+
+    }
+
+
+
+    .sec-tag {
+
+      display: inline-block;
+
+      font-size: .67rem;
+
+      font-weight: 700;
+
+      letter-spacing: 2.2px;
+
+      text-transform: uppercase;
+
+      color: var(--accent);
+
+      margin-bottom: 8px;
+
+    }
+
+
+
+    .sec-head h2 {
+
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
+
+      font-weight: 700;
+
+      color: var(--white);
+
+      letter-spacing: -.3px;
+
+      line-height: 1.25;
+
+    }
+
+
+
+    .sec-head p {
+
+      margin-top: 8px;
+
+      color: var(--muted);
+
+      font-size: .95rem;
+
+    }
+
+
+
+    /* ── HIGHLIGHT BOX ─────────────────────────────────── */
+
+    .highlight-box {
+
+      background: var(--c1);
+
+      border: 1px solid rgba(212,160,64,.38);
+
+      border-left: 4px solid var(--accent);
+
+      border-radius: var(--radius-md);
+
+      padding: 32px 36px;
+
+      margin-top: 72px;
+
+    }
+
+
+
+    .highlight-box h2 {
+
+      font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+
+      font-weight: 700;
+
+      color: var(--white);
+
+      margin-bottom: 12px;
+
+    }
+
+
+
+    .highlight-box p {
+
+      color: #b4bec8;
+
+      font-size: .97rem;
+
+      line-height: 1.82;
+
+    }
+
+
+
+    /* ── SERVICE GRID ──────────────────────────────────── */
+
+    .service-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+
+      gap: 12px;
+
+    }
+
+
+
+    .service-item {
+
+      background: var(--c1);
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      border-radius: var(--radius-md);
+
+      padding: 16px 18px 16px 50px;
+
+      position: relative;
+
+      font-size: .92rem;
+
+      color: var(--light);
+
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+
+    }
+
+
+
+    .service-item::before {
+
+      content: "✓";
+
+      position: absolute;
+
+      left: 16px;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      width: 22px;
+
+      height: 22px;
+
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+
+      border-radius: 50%;
+
+      color: #0d1005;
+
+      font-size: .65rem;
+
+      font-weight: 900;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      line-height: 22px;
+
+      text-align: center;
+
+    }
+
+
+
+    .service-item:hover {
+
+      border-color: rgba(212,160,64,.55);
+
+      transform: translateY(-3px);
+
+      box-shadow: var(--shadow-md);
+
+    }
+
+
+
+    /* ── WHY GRID ──────────────────────────────────────── */
+
+    .why-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+
+      gap: 16px;
+
+    }
+
+
+
+    .why-card {
+
+      background: var(--c1);
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      border-radius: var(--radius-md);
+
+      padding: 30px 22px;
+
+      text-align: center;
+
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+
+    }
+
+
+
+    .why-card:hover {
+
+      border-color: rgba(212,160,64,.55);
+
+      transform: translateY(-4px);
+
+      box-shadow: var(--shadow-md);
+
+    }
+
+
+
+    .why-icon {
+
+      width: 54px;
+
+      height: 54px;
+
+      margin: 0 auto 18px;
+
+      background: linear-gradient(135deg, rgba(212,160,64,.26), rgba(242,201,110,.14));
+
+      border: 1px solid rgba(212,160,64,.42);
+
+      border-radius: 12px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 1.55rem;
+
+    }
+
+
+
+    .why-card h3 {
+
+      font-size: .87rem;
+
+      font-weight: 600;
+
+      color: var(--light);
+
+      line-height: 1.5;
+
+    }
+
+
+
+    /* ── TEXT CARD ─────────────────────────────────────── */
+
+    .text-card {
+
+      background: var(--c1);
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      border-radius: var(--radius-md);
+
+      padding: 34px 36px;
+
+    }
+
+
+
+    .text-card h2 {
+
+      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+
+      font-weight: 700;
+
+      color: var(--white);
+
+      margin-bottom: 12px;
+
+      line-height: 1.3;
+
+    }
+
+
+
+    .text-card p {
+
+      color: #b4bec8;
+
+      font-size: .95rem;
+
+      line-height: 1.85;
+
+    }
+
+
+
+    /* ── CARD ROW ──────────────────────────────────────── */
+
+    .card-row {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 18px;
+
+      margin-top: 72px;
+
+    }
+
+
+
+    @media (max-width: 640px) {
+
+      .card-row { grid-template-columns: 1fr; }
+
+      .text-card { padding: 24px 22px; }
+
+    }
+
+
+
+    /* ── CTA SECTION ───────────────────────────────────── */
+
+    .cta-section {
+
+      margin-top: 72px;
+
+      background: linear-gradient(135deg, #111c10 0%, #201809 100%);
+
+      border: 1px solid rgba(212,160,64,.42);
+
+      border-radius: var(--radius-lg);
+
+      padding: 64px 40px;
+
+      text-align: center;
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+
+
+    .cta-section::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: -80px; right: -80px;
+
+      width: 280px; height: 280px;
+
+      border-radius: 50%;
+
+      background: radial-gradient(circle, rgba(212,160,64,.2) 0%, transparent 70%);
+
+      pointer-events: none;
+
+    }
+
+
+
+    .cta-section h2 {
+
+      font-size: clamp(1.3rem, 3vw, 1.85rem);
+
+      font-weight: 800;
+
+      color: var(--white);
+
+      margin-bottom: 14px;
+
+      letter-spacing: -.4px;
+
+      position: relative;
+
+    }
+
+
+
+    .cta-section p {
+
+      color: #b4bec8;
+
+      font-size: .97rem;
+
+      margin-bottom: 34px;
+
+      max-width: 500px;
+
+      margin-left: auto;
+
+      margin-right: auto;
+
+      line-height: 1.75;
+
+      position: relative;
+
+    }
+
+
+
+    /* ── CONTACT CTA ────────────────────────────────────── */
+
+    .contact-block {
+
+      margin-top: 28px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 14px;
+
+    }
+
+
+
+    .contact-block .contact-intro {
+
+      font-size: .95rem;
+
+      color: #9ca3af;
+
+      margin: 0;
+
+    }
+
+
+
+    .wa-btn {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      background: #25d366;
+
+      color: #0d1005;
+
+      text-decoration: none;
+
+      padding: 14px 34px;
+
+      border-radius: 30px;
+
+      font-weight: 800;
+
+      font-size: .97rem;
+
+      letter-spacing: .2px;
+
+      box-shadow: 0 4px 22px rgba(37,211,102,.32);
+
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+
+    }
+
+
+
+    .wa-btn:hover {
+
+      background: #20c55b;
+
+      transform: translateY(-2px);
+
+      box-shadow: 0 8px 30px rgba(37,211,102,.42);
+
+    }
+
+
+
+    .wa-btn:active { transform: translateY(0); }
+
+
+
+    .wa-badge {
+
+      font-size: .73rem;
+
+      color: rgba(37,211,102,.7);
+
+      letter-spacing: .5px;
+
+    }
+
+
+
+    .contact-details {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      gap: 10px 28px;
+
+      margin-top: 6px;
+
+    }
+
+
+
+    .contact-details a {
+
+      color: #9ca3af;
+
+      text-decoration: none;
+
+      font-size: .88rem;
+
+      transition: color var(--transition);
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+    }
+
+
+
+    .contact-details a:hover { color: var(--accent2); }
+
+
+
+    /* ── FOOTER ────────────────────────────────────────── */
+
+    footer {
+
+      background: var(--c1);
+
+      border-top: 1px solid rgba(255,255,255,.06);
+
+      padding: 52px 24px 38px;
+
+      text-align: center;
+
+    }
+
+
+
+    .footer-logo {
+
+      font-size: .78rem;
+
+      font-weight: 700;
+
+      letter-spacing: 2.5px;
+
+      text-transform: uppercase;
+
+      color: var(--accent2);
+
+      margin-bottom: 16px;
+
+    }
+
+
+
+    .footer-tagline {
+
+      color: var(--muted);
+
+      font-size: .87rem;
+
+      margin-bottom: 22px;
+
+    }
+
+
+
+    .footer-email a {
+
+      color: var(--accent2);
+
+      text-decoration: none;
+
+      font-size: .97rem;
+
+      font-weight: 600;
+
+      border-bottom: 1px solid rgba(201,147,58,.3);
+
+      padding-bottom: 2px;
+
+      transition: color var(--transition), border-color var(--transition);
+
+    }
+
+
+
+    .footer-email a:hover { color: var(--white); border-color: var(--white); }
+
+
+
+    .footer-copy {
+
+      margin-top: 28px;
+
+      font-size: .72rem;
+
+      color: #4d5a68;
+
+      letter-spacing: .3px;
+
+    }
+
+
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+
+    @media (max-width: 620px) {
+
+      .hero { padding: 76px 20px 68px; }
+
+      .cta-section { padding: 44px 22px; }
+
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+
+      .highlight-box { padding: 24px 22px; }
+
+    }
+
+  </style>
+
 
     <link rel="canonical" href="https://mecanicadesuelossantiago.one/">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <meta name="theme-color" content="#002e63">
-    <link rel="apple-touch-icon" href="/img/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_CL">
     <meta property="og:title" content="Mecanica de Suelos en Santiago">
@@ -694,187 +1262,371 @@
   ]
 }
 </script>
-</head>
-<body>
-
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <span class="topbar-brand">Mecanica de Suelos &mdash; Santiago</span>
-    <a href="mailto:contacto@mecanicadesuelossantiago.one" class="topbar-cta">Contactanos</a>
-  </div>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-label">Ingenieria Geotecnica &bull; Santiago de Chile</div>
-    <h1>Mecanica de<br><span>Suelos en Santiago</span></h1>
-    <p class="hero-desc">
-      Desarrollamos diferentes actividades que cubren todas las tareas en la elaboración de
-      exploraciones y estudios de mecanica de suelos en Santiago de Chile, ofreciéndoles:
-      Estudios de Mecanica de Suelos, Consultoria Especializada, Calicatas, Sondajes&nbsp;SPT,
-      Estudios Geofisicos, Asesorias Personalizadas y mas. Realizamos trabajos de campo,
-      ensayos de laboratorio sobre las muestras extraídas y finalmente elaboramos los
-      informes del estudio.
-    </p>
-    <div class="hero-actions">
-      <a href="mailto:contacto@mecanicadesuelossantiago.one" class="btn-primary">Solicitar Estudio</a>
-      <a href="#servicios" class="btn-ghost">Ver Servicios</a>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stats-inner">
-      <div class="stat-item">
-        <strong>SPT</strong>
-        <span>Sondajes especializados</span>
-      </div>
-      <div class="stat-item">
-        <strong>9</strong>
-        <span>Servicios disponibles</span>
-      </div>
-      <div class="stat-item">
-        <strong>USA</strong>
-        <span>Master en geotecnia</span>
-      </div>
-      <div class="stat-item">
-        <strong>100%</strong>
-        <span>Consultoria personalizada</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- MAIN -->
-  <div class="wrapper">
-
-    <!-- ESTUDIOS -->
-    <div class="highlight-box">
-      <h2>Estudios de Mecanica de Suelos en Santiago</h2>
-      <p>
-        Los estudios de mecanica de suelos están orientados a caracterizar y modelar el
-        suelo de fundación de estructuras, a traves de la realización de exploraciones
-        (calicatas) y sondajes.
-      </p>
-    </div>
-
-    <!-- SERVICIOS -->
-    <div id="servicios">
-      <div class="sec-head">
-        <span class="sec-tag">Lo que hacemos</span>
-        <h2>Servicios de Estudios de Mecanica de Suelos en Santiago</h2>
-      </div>
-      <div class="service-grid">
-        <div class="service-item">Excavación de calicatas.</div>
-        <div class="service-item">Sondajes SPT y ensayos de caracterización.</div>
-        <div class="service-item">Tensiones admisibles.</div>
-        <div class="service-item">Capacidad de carga del suelo.</div>
-        <div class="service-item">Diseño de fundaciones.</div>
-        <div class="service-item">Estabilidad de taludes.</div>
-        <div class="service-item">Diseños de muros de contencion.</div>
-        <div class="service-item">Determinación de nivel freático del suelo.</div>
-        <div class="service-item">Clasificacion sismica de los suelos.</div>
-      </div>
-    </div>
-
-    <!-- POR QUÉ -->
-    <div>
-      <div class="sec-head">
-        <span class="sec-tag">Ventajas</span>
-        <h2>¿Por que Preferir Mecanica de Suelos Santiago?</h2>
-      </div>
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-icon">🎓</div>
-          <h3>Consultor Geotecnico Especializado con un Master en USA.</h3>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">💰</div>
-          <h3>Descuentos en Ensayos de Laboratorio al pedir tu Estudio de Mecanica de Suelos.</h3>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">🔩</div>
-          <h3>Perforadora propia.</h3>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">🤝</div>
-          <h3>Consultoria Personalizada.</h3>
-        </div>
-      </div>
-    </div>
-
-    <!-- CONSULTORIA + CALIDAD -->
-    <div class="card-row">
-      <div class="text-card">
-        <h2>Consultoria de Mecanica de Suelos en Santiago</h2>
-        <p>
-          Cada obra o proyecto de construccion tiene sus características particulares, motivo
-          por el cual, te ofrecemos un servicio personalizado de ingenieria, asesoria y
-          consultoria en mecanica de suelos para tu proyecto en Santiago.
-        </p>
-      </div>
-      <div class="text-card" style="border-left: 3px solid var(--accent);">
-        <h2>Calidad y Compromiso: Consultora de Mecanica de Suelos en Santiago</h2>
-        <p>
-          Nuestros Estudios de Mecanica de Suelos buscan resolver los problemas de capacidad
-          de carga del terreno, para la construcción, edificación y desarrollo estructuras
-          industriales o de fuentes de energías renovables no convencionales como parques
-          eólicos.
-        </p>
-      </div>
-    </div>
-
-    <!-- PROYECTOS -->
-    <div>
-      <div class="sec-head">
-        <span class="sec-tag">Aplicaciones</span>
-        <h2>Estudios de Mecanica de Suelos en Santiago para Diferentes proyectos como:</h2>
-      </div>
-      <div class="service-grid">
-        <div class="service-item">Estudios para Edificios.</div>
-        <div class="service-item">Estudios para Viviendas unifamiliares.</div>
-        <div class="service-item">Estudios para Naves industriales.</div>
-        <div class="service-item">Estudios para Muros de contención.</div>
-        <div class="service-item">Estudios para Rellenos sanitarios.</div>
-        <div class="service-item">Estudios para Obra Civil.</div>
-        <div class="service-item">Estudios para Reforzamiento de cimentaciones.</div>
-        <div class="service-item">Estudios para Urbanizaciones.</div>
-      </div>
-    </div>
-
-    <!-- CTA FINAL -->
-    <div class="cta-section">
-      <h2>Somos una Empresa de Mecanica de Suelos en Santiago</h2>
-      <p>Que se adapta a tus requerimientos. Obtén una cotización rápida para tu estudio de Mecánica de Suelos.</p>
-
-      <div class="contact-block">
-        <!-- WhatsApp -->
-        <a href="https://wa.me/56977092993?text=Hola,%20me%20gustaría%20solicitar%20información" class="wa-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" fill="#0d1005"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.663 4.61 1.81 6.51L4 29l7.697-1.787A12.94 12.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.95 9.95 0 0 1-5.145-1.43l-.37-.223-4.57 1.06 1.1-4.46-.244-.386A9.95 9.95 0 0 1 6 15c0-5.523 4.477-10 10-10zm-3.07 5.5c-.22 0-.578.082-.882.41-.304.328-1.16 1.134-1.16 2.766 0 1.633 1.187 3.21 1.352 3.433.164.22 2.328 3.556 5.636 4.843 2.784 1.088 3.348.872 3.95.817.603-.055 1.944-.794 2.218-1.562.275-.767.275-1.425.192-1.562-.082-.136-.304-.22-.632-.384-.329-.165-1.944-.959-2.246-1.068-.302-.11-.521-.165-.74.165-.22.329-.852 1.068-.99 1.288-.137.22-.275.247-.604.082-.328-.164-1.386-.511-2.64-1.628-.975-.87-1.633-1.943-1.824-2.271-.192-.329-.021-.506.144-.67.149-.148.329-.384.493-.576.165-.192.22-.33.33-.549.11-.22.055-.412-.027-.576-.083-.165-.74-1.786-1.015-2.447-.247-.59-.5-.508-.687-.518-.176-.009-.384-.01-.604-.01z"/></svg>
-          WhatsApp: +56 9 7709 2993
-        </a>
-        <span class="wa-badge">★ La forma más rápida de cotizar</span>
-
-        <!-- Email + Teléfono -->
-        <div class="contact-details">
-          <a href="mailto:contacto@mecanicadesuelossantiago.one">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            contacto@mecanicadesuelossantiago.one
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Mecanica de Suelos &bull; Santiago</div>
-    <p class="footer-tagline">Calidad, Compromiso y Experiencia en Ingenieria Geotecnica.</p>
-    <div class="footer-email">
-      <span style="color:var(--muted);font-size:.82rem;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase;">Correo de Contacto</span>
-      <a href="mailto:contacto@mecanicadesuelossantiago.one">contacto@mecanicadesuelossantiago.one</a>
-    </div>
-    <p class="footer-copy">&copy; 2026 Mecanica de Suelos en Santiago &mdash; Todos los derechos reservados.</p>
-  </footer>
-
-</body>
-</html>
+</head>
+
+<body>
+
+
+
+  <!-- TOP BAR -->
+
+  <div class="topbar">
+
+    <span class="topbar-brand">Mecanica de Suelos &mdash; Santiago</span>
+
+    <a href="mailto:contacto@mecanicadesuelossantiago.one" class="topbar-cta">Contactanos</a>
+
+  </div>
+
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-label">Ingenieria Geotecnica &bull; Santiago de Chile</div>
+
+    <h1>Mecanica de<br><span>Suelos en Santiago</span></h1>
+
+    <p class="hero-desc">
+
+      Desarrollamos diferentes actividades que cubren todas las tareas en la elaboración de
+
+      exploraciones y estudios de mecanica de suelos en Santiago de Chile, ofreciéndoles:
+
+      Estudios de Mecanica de Suelos, Consultoria Especializada, Calicatas, Sondajes&nbsp;SPT,
+
+      Estudios Geofisicos, Asesorias Personalizadas y mas. Realizamos trabajos de campo,
+
+      ensayos de laboratorio sobre las muestras extraídas y finalmente elaboramos los
+
+      informes del estudio.
+
+    </p>
+
+    <div class="hero-actions">
+
+      <a href="mailto:contacto@mecanicadesuelossantiago.one" class="btn-primary">Solicitar Estudio</a>
+
+      <a href="#servicios" class="btn-ghost">Ver Servicios</a>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="stats-inner">
+
+      <div class="stat-item">
+
+        <strong>SPT</strong>
+
+        <span>Sondajes especializados</span>
+
+      </div>
+
+      <div class="stat-item">
+
+        <strong>9</strong>
+
+        <span>Servicios disponibles</span>
+
+      </div>
+
+      <div class="stat-item">
+
+        <strong>USA</strong>
+
+        <span>Master en geotecnia</span>
+
+      </div>
+
+      <div class="stat-item">
+
+        <strong>100%</strong>
+
+        <span>Consultoria personalizada</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- MAIN -->
+
+  <div class="wrapper">
+
+
+
+    <!-- ESTUDIOS -->
+
+    <div class="highlight-box">
+
+      <h2>Estudios de Mecanica de Suelos en Santiago</h2>
+
+      <p>
+
+        Los estudios de mecanica de suelos están orientados a caracterizar y modelar el
+
+        suelo de fundación de estructuras, a traves de la realización de exploraciones
+
+        (calicatas) y sondajes.
+
+      </p>
+
+    </div>
+
+
+
+    <!-- SERVICIOS -->
+
+    <div id="servicios">
+
+      <div class="sec-head">
+
+        <span class="sec-tag">Lo que hacemos</span>
+
+        <h2>Servicios de Estudios de Mecanica de Suelos en Santiago</h2>
+
+      </div>
+
+      <div class="service-grid">
+
+        <div class="service-item">Excavación de calicatas.</div>
+
+        <div class="service-item">Sondajes SPT y ensayos de caracterización.</div>
+
+        <div class="service-item">Tensiones admisibles.</div>
+
+        <div class="service-item">Capacidad de carga del suelo.</div>
+
+        <div class="service-item">Diseño de fundaciones.</div>
+
+        <div class="service-item">Estabilidad de taludes.</div>
+
+        <div class="service-item">Diseños de muros de contencion.</div>
+
+        <div class="service-item">Determinación de nivel freático del suelo.</div>
+
+        <div class="service-item">Clasificacion sismica de los suelos.</div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- POR QUÉ -->
+
+    <div>
+
+      <div class="sec-head">
+
+        <span class="sec-tag">Ventajas</span>
+
+        <h2>¿Por que Preferir Mecanica de Suelos Santiago?</h2>
+
+      </div>
+
+      <div class="why-grid">
+
+        <div class="why-card">
+
+          <div class="why-icon">🎓</div>
+
+          <h3>Consultor Geotecnico Especializado con un Master en USA.</h3>
+
+        </div>
+
+        <div class="why-card">
+
+          <div class="why-icon">💰</div>
+
+          <h3>Descuentos en Ensayos de Laboratorio al pedir tu Estudio de Mecanica de Suelos.</h3>
+
+        </div>
+
+        <div class="why-card">
+
+          <div class="why-icon">🔩</div>
+
+          <h3>Perforadora propia.</h3>
+
+        </div>
+
+        <div class="why-card">
+
+          <div class="why-icon">🤝</div>
+
+          <h3>Consultoria Personalizada.</h3>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- CONSULTORIA + CALIDAD -->
+
+    <div class="card-row">
+
+      <div class="text-card">
+
+        <h2>Consultoria de Mecanica de Suelos en Santiago</h2>
+
+        <p>
+
+          Cada obra o proyecto de construccion tiene sus características particulares, motivo
+
+          por el cual, te ofrecemos un servicio personalizado de ingenieria, asesoria y
+
+          consultoria en mecanica de suelos para tu proyecto en Santiago.
+
+        </p>
+
+      </div>
+
+      <div class="text-card" style="border-left: 3px solid var(--accent);">
+
+        <h2>Calidad y Compromiso: Consultora de Mecanica de Suelos en Santiago</h2>
+
+        <p>
+
+          Nuestros Estudios de Mecanica de Suelos buscan resolver los problemas de capacidad
+
+          de carga del terreno, para la construcción, edificación y desarrollo estructuras
+
+          industriales o de fuentes de energías renovables no convencionales como parques
+
+          eólicos.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- PROYECTOS -->
+
+    <div>
+
+      <div class="sec-head">
+
+        <span class="sec-tag">Aplicaciones</span>
+
+        <h2>Estudios de Mecanica de Suelos en Santiago para Diferentes proyectos como:</h2>
+
+      </div>
+
+      <div class="service-grid">
+
+        <div class="service-item">Estudios para Edificios.</div>
+
+        <div class="service-item">Estudios para Viviendas unifamiliares.</div>
+
+        <div class="service-item">Estudios para Naves industriales.</div>
+
+        <div class="service-item">Estudios para Muros de contención.</div>
+
+        <div class="service-item">Estudios para Rellenos sanitarios.</div>
+
+        <div class="service-item">Estudios para Obra Civil.</div>
+
+        <div class="service-item">Estudios para Reforzamiento de cimentaciones.</div>
+
+        <div class="service-item">Estudios para Urbanizaciones.</div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- CTA FINAL -->
+
+    <div class="cta-section">
+
+      <h2>Somos una Empresa de Mecanica de Suelos en Santiago</h2>
+
+      <p>Que se adapta a tus requerimientos. Obtén una cotización rápida para tu estudio de Mecánica de Suelos.</p>
+
+
+
+      <div class="contact-block">
+
+        <!-- WhatsApp -->
+
+        <a href="https://wa.me/56977092993?text=Hola,%20me%20gustaría%20solicitar%20información" class="wa-btn">
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" fill="#0d1005"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.663 4.61 1.81 6.51L4 29l7.697-1.787A12.94 12.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.95 9.95 0 0 1-5.145-1.43l-.37-.223-4.57 1.06 1.1-4.46-.244-.386A9.95 9.95 0 0 1 6 15c0-5.523 4.477-10 10-10zm-3.07 5.5c-.22 0-.578.082-.882.41-.304.328-1.16 1.134-1.16 2.766 0 1.633 1.187 3.21 1.352 3.433.164.22 2.328 3.556 5.636 4.843 2.784 1.088 3.348.872 3.95.817.603-.055 1.944-.794 2.218-1.562.275-.767.275-1.425.192-1.562-.082-.136-.304-.22-.632-.384-.329-.165-1.944-.959-2.246-1.068-.302-.11-.521-.165-.74.165-.22.329-.852 1.068-.99 1.288-.137.22-.275.247-.604.082-.328-.164-1.386-.511-2.64-1.628-.975-.87-1.633-1.943-1.824-2.271-.192-.329-.021-.506.144-.67.149-.148.329-.384.493-.576.165-.192.22-.33.33-.549.11-.22.055-.412-.027-.576-.083-.165-.74-1.786-1.015-2.447-.247-.59-.5-.508-.687-.518-.176-.009-.384-.01-.604-.01z"/></svg>
+
+          WhatsApp: +56 9 7709 2993
+
+        </a>
+
+        <span class="wa-badge">★ La forma más rápida de cotizar</span>
+
+
+
+        <!-- Email + Teléfono -->
+
+        <div class="contact-details">
+
+          <a href="mailto:contacto@mecanicadesuelossantiago.one">
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+
+            contacto@mecanicadesuelossantiago.one
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-logo">Mecanica de Suelos &bull; Santiago</div>
+
+    <p class="footer-tagline">Calidad, Compromiso y Experiencia en Ingenieria Geotecnica.</p>
+
+    <div class="footer-email">
+
+      <span style="color:var(--muted);font-size:.82rem;display:block;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase;">Correo de Contacto</span>
+
+      <a href="mailto:contacto@mecanicadesuelossantiago.one">contacto@mecanicadesuelossantiago.one</a>
+
+    </div>
+
+    <p class="footer-copy">&copy; 2026 Mecanica de Suelos en Santiago &mdash; Todos los derechos reservados.</p>
+
+  </footer>
+
+
+
+</body>
+
+</html>
+
